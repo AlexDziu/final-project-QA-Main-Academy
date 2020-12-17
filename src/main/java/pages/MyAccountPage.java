@@ -18,6 +18,7 @@ public class MyAccountPage extends BasePage {
 
     public String checkUserInfo() {
         waitUntilVisible(userInfo, 10);
+        System.out.println("Check user info");
         return userInfo.getText();
     }
 }

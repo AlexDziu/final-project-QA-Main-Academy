@@ -17,5 +17,6 @@ public class SignInPage extends BasePage {
 
     public void clickOnCreateAccount() {
         waitUntilVisible(createAccountLink, 10).click();
+        System.out.println("Click on create account");
     }
 }

@@ -47,6 +47,7 @@ public class TopMenu {
             String woman = element.findElement(By.xpath("//li[@id='category-3']//li[2]")).getText();
             listItems.add(man);
             listItems.add(woman);
+            System.out.println("Check clothes items");
         }
         return String.valueOf(listItems);
     }
@@ -61,6 +62,7 @@ public class TopMenu {
             String accessories = element.findElement(By.xpath("//li[@id='category-6']//li[2]")).getText();
             listItems.add(stationary);
             listItems.add(accessories);
+            System.out.println("Check Accessories items");
         }
         return String.valueOf(listItems);
     }
@@ -68,6 +70,7 @@ public class TopMenu {
     public boolean checkArtItems() {
         wait.until(ExpectedConditions.visibilityOf(art));
         actions.moveToElement(getDriver().findElement(By.xpath("//li[@id='category-9']"))).build().perform();
+        System.out.println("Check Art is empty");
         return art.isDisplayed();
     }
 }

@@ -61,6 +61,7 @@ public class CreateAccountPage extends BasePage {
         selectIAgree.click();
         waitUntilClickable(saveButton, 10).click();
         saveButton.click();
+        System.out.println("Fill registration");
     }
 
     public void fillRegistrationWithInvalidData(String firstName, String lastName, String email,
@@ -77,13 +78,16 @@ public class CreateAccountPage extends BasePage {
         selectIAgree.click();
         waitUntilClickable(saveButton, 10).click();
         saveButton.click();
+        System.out.println("Fill invalid registration");
     }
 
     public String borderFirstName() {
+        System.out.println("First name border is red");
         return waitUntilVisible(fieldFirstName, 10).getCssValue("outline-color");
     }
 
     public String errorMessage() {
+        System.out.println("Get error message");
         return waitUntilVisible(invalidFormatMessage, 10).getText();
     }
 }

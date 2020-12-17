@@ -31,7 +31,7 @@ public abstract class BasePage implements IFrame, IWaiting {
         return DRIVER_THREAD_LOCAL.get();
     }
 
-    public WebElement waitUntilVisible(WebElement element, int time) {
+    public static WebElement waitUntilVisible(WebElement element, int time) {
         return new WebDriverWait(getDriver(), time)
                 .until(ExpectedConditions.visibilityOf(element));
     }

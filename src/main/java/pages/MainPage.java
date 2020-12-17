@@ -34,12 +34,14 @@ public class MainPage extends BasePage {
         getDriver().get("https://demo.prestashop.com/");
         spinner();
         switchIframe();
+        System.out.println("Open main page");
     }
 
     public boolean spinner() {
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), 10);
             wait.until(ExpectedConditions.visibilityOf(spinner));
+            System.out.println("Spinner displayed");
             return spinner.isDisplayed();
         } catch (org.openqa.selenium.NoSuchElementException
                 | org.openqa.selenium.StaleElementReferenceException
@@ -52,6 +54,7 @@ public class MainPage extends BasePage {
         waitUntilVisible(newsLetterText, 10);
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("arguments[0].scrollIntoView();", newsLetterText);
+        System.out.println("Scroll page down");
     }
 
     public void enterEmail(String email) {
@@ -59,6 +62,7 @@ public class MainPage extends BasePage {
         emailField.sendKeys(email);
         subscribeButton.click();
         subscribeButton.click();
+        System.out.println("Enter email");
     }
 
     public String getErrorMessage() {
