@@ -14,9 +14,6 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//div[@id='loadingMessage']")
     private WebElement spinner;
 
-    @FindBy(xpath = "//iframe[@id='framelive']")
-    private WebElement iframe;
-
     @FindBy(xpath = "//div[@class='block_newsletter col-lg-8 col-md-12 col-sm-12']")
     private WebElement newsLetterText;
 
@@ -35,6 +32,8 @@ public class MainPage extends BasePage {
 
     public void openMainPage() {
         getDriver().get("https://demo.prestashop.com/");
+        spinner();
+        switchIframe();
     }
 
     public boolean spinner() {
@@ -49,10 +48,6 @@ public class MainPage extends BasePage {
         }
     }
 
-    public void findIframe() {
-        getDriver().switchTo().frame(iframe);
-    }
-
     public void scrollVisibleTextSubscribe() {
         waitUntilVisible(newsLetterText, 10);
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
@@ -62,6 +57,7 @@ public class MainPage extends BasePage {
     public void enterEmail(String email) {
         waitUntilVisible(emailField, 10);
         emailField.sendKeys(email);
+        subscribeButton.click();
         subscribeButton.click();
     }
 

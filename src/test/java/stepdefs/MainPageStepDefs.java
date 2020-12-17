@@ -14,9 +14,6 @@ public class MainPageStepDefs {
     @Given("I am on the demo.prestashop.com main page")
     public void i_am_on_the_main_page() {
         mainPage.openMainPage();
-        mainPage.spinner();
-        mainPage.findIframe();
-
     }
 
     @When("I enter {string} email")

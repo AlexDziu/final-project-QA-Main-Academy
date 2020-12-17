@@ -9,14 +9,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static pages.BasePage.getDriver;
 
 @Getter
 public class TopBar {
-    private static WebDriver webDriver;
-    private static WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+    private final WebDriver webDriver;
+    private final WebDriverWait wait;
 
     @FindBy(xpath = "//i[@class='material-icons expand-more']")
     private WebElement languagesButton;
@@ -24,15 +25,17 @@ public class TopBar {
     @FindBy(xpath = "//ul[@class='dropdown-menu hidden-sm-down']")
     private WebElement dropDownList;
 
+    @FindBy(xpath = "//a[@title='Log in to your customer account']")
+    private WebElement signInButton;
+
     public TopBar(WebDriver driver) {
         PageFactory.initElements(getDriver(), this);
         webDriver = driver;
-        wait = new WebDriverWait(getDriver(), 5);
+        wait = new WebDriverWait(getDriver(), 15);
     }
 
-    public TopBar clickOnLanguagesButton() {
+    public void clickOnLanguagesButton() {
         wait.until(ExpectedConditions.visibilityOf(languagesButton)).click();
-        return this;
     }
 
     public int checkAmountLanguages() {
@@ -40,10 +43,19 @@ public class TopBar {
         return webElementList.size();
     }
 
-    public void checkUkrLanguageExist(String ukrLanguage) {
+    public String checkUkrLanguageExist() {
         wait.until(ExpectedConditions.visibilityOf(dropDownList));
-
+        ArrayList<String> listLanguages = new ArrayList<>();
+        List<WebElement> webElementList = getDriver().findElements(By.xpath("//ul[@class='dropdown-menu hidden-sm-down']//li"));
+        for (WebElement element : webElementList) {
+            String ukrLanguage = element.findElement(By.xpath("//a[@data-iso-code='uk']")).getText();
+            listLanguages.add(ukrLanguage);
+        }
+        return String.valueOf(listLanguages);
     }
 
+    public void clickOnSignIn() {
+        wait.until(ExpectedConditions.visibilityOf(signInButton)).click();
+    }
 
 }
