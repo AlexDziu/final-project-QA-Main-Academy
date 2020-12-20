@@ -1,6 +1,8 @@
 package components;
 
+import io.qameta.allure.Step;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static pages.BasePage.getDriver;
+import static utils.ScreenShotUtils.*;
 
+@Slf4j
 @Getter
 public class TopMenu {
     private final WebDriver webDriver;
@@ -37,9 +41,12 @@ public class TopMenu {
         actions = new Actions(getDriver());
     }
 
-    public String checkClothesItems() {
+    @Step("Check clothes items")
+    public ArrayList<String> checkClothesItems() {
         wait.until(ExpectedConditions.visibilityOf(clothes));
         actions.moveToElement(getDriver().findElement(By.xpath("//li[@id='category-3']"))).build().perform();
+        log.info("Check clothes items");
+        makeScreenshot();
         ArrayList<String> listItems = new ArrayList<>();
         List<WebElement> webElementList = getDriver().findElements(By.xpath("//li[@id='category-3']//li"));
         for (WebElement element : webElementList) {
@@ -47,30 +54,33 @@ public class TopMenu {
             String woman = element.findElement(By.xpath("//li[@id='category-3']//li[2]")).getText();
             listItems.add(man);
             listItems.add(woman);
-            System.out.println("Check clothes items");
         }
-        return String.valueOf(listItems);
+        return listItems;
     }
 
-    public String checkAccessoriesItems() {
+    @Step("Check accessories items")
+    public ArrayList<String> checkAccessoriesItems() {
         wait.until(ExpectedConditions.visibilityOf(accessories));
         actions.moveToElement(getDriver().findElement(By.xpath("//li[@id='category-6']"))).build().perform();
+        log.info("Check accessories items");
+        makeScreenshot();
         ArrayList<String> listItems = new ArrayList<>();
         List<WebElement> webElementList = getDriver().findElements(By.xpath("//li[@id='category-6']//li"));
         for (WebElement element : webElementList) {
             String stationary = element.findElement(By.xpath("//li[@id='category-6']//li[1]")).getText();
-            String accessories = element.findElement(By.xpath("//li[@id='category-6']//li[2]")).getText();
+            String homeAccessories = element.findElement(By.xpath("//li[@id='category-6']//li[2]")).getText();
             listItems.add(stationary);
-            listItems.add(accessories);
-            System.out.println("Check Accessories items");
+            listItems.add(homeAccessories);
         }
-        return String.valueOf(listItems);
+        return listItems;
     }
 
+    @Step("Check art items")
     public boolean checkArtItems() {
         wait.until(ExpectedConditions.visibilityOf(art));
         actions.moveToElement(getDriver().findElement(By.xpath("//li[@id='category-9']"))).build().perform();
-        System.out.println("Check Art is empty");
+        makeScreenshot();
+        log.info("Check Art is empty");
         return art.isDisplayed();
     }
 }

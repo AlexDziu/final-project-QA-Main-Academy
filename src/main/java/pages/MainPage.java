@@ -1,13 +1,19 @@
 package pages;
 
+import io.qameta.allure.Step;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static utils.ScreenShotUtils.*;
+
+@Slf4j
 @Getter
 public class MainPage extends BasePage {
 
@@ -26,22 +32,28 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//p[@class='alert alert-danger block_newsletter_alert']")
     private WebElement errorMessage;
 
+    @FindBy(xpath = "//div[@id='_desktop_logo']")
+    private WebElement myStore;
+
     public MainPage() {
         PageFactory.initElements(getDriver(), this);
     }
 
+    @Step("Open main page")
     public void openMainPage() {
+        log.info("Opening main page of the application");
         getDriver().get("https://demo.prestashop.com/");
-        spinner();
+        waitingSpinner();
         switchIframe();
-        System.out.println("Open main page");
+        waitUntilVisible(myStore, 15);
+        makeScreenshot();
     }
 
-    public boolean spinner() {
+    public boolean waitingSpinner() {
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), 10);
             wait.until(ExpectedConditions.visibilityOf(spinner));
-            System.out.println("Spinner displayed");
+            log.info("Spinner displayed");
             return spinner.isDisplayed();
         } catch (org.openqa.selenium.NoSuchElementException
                 | org.openqa.selenium.StaleElementReferenceException
@@ -54,19 +66,24 @@ public class MainPage extends BasePage {
         waitUntilVisible(newsLetterText, 10);
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("arguments[0].scrollIntoView();", newsLetterText);
-        System.out.println("Scroll page down");
+        log.info("Scroll page down");
     }
 
+    @Step("Enter email and see error message ")
     public void enterEmail(String email) {
+        Actions actions = new Actions(getDriver());
         waitUntilVisible(emailField, 10);
         emailField.sendKeys(email);
-        subscribeButton.click();
-        subscribeButton.click();
-        System.out.println("Enter email");
+        waitUntilVisible(subscribeButton, 10);
+        actions.doubleClick(subscribeButton).build().perform();
+        log.info("Enter email");
+        makeScreenshot();
+
     }
 
     public String getErrorMessage() {
-        waitUntilVisible(errorMessage, 10);
+        waitUntilVisible(errorMessage, 15);
+        log.info("get error message");
         return errorMessage.getText();
     }
 

@@ -22,7 +22,7 @@ public class MainPageStepDefs {
         mainPage.enterEmail(email);
     }
 
-    @Then("I see error message {string} appears")
+    @Then("I check that error message {string} appears")
     public void i_see_error_message(String errorMessage) {
         assertThat(mainPage.getErrorMessage()).isEqualTo(errorMessage);
     }

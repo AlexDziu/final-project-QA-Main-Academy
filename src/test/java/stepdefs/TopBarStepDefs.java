@@ -16,7 +16,7 @@ public class TopBarStepDefs {
         topBar.clickOnLanguagesButton();
     }
 
-    @And("I see that {int} languages exists in Language dropdown in the top menu")
+    @And("I check that {int} languages exists in Language dropdown in the top menu")
     public void i_see_languages_exists(int amountLanguages) {
         assertThat(topBar.checkAmountLanguages()).isEqualTo(amountLanguages);
     }

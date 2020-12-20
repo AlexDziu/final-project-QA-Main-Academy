@@ -1,6 +1,8 @@
 package components;
 
+import io.qameta.allure.Step;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static pages.BasePage.getDriver;
+import static utils.ScreenShotUtils.*;
 
+@Slf4j
 @Getter
 public class TopBar {
     private final WebDriver webDriver;
@@ -39,37 +43,43 @@ public class TopBar {
         wait = new WebDriverWait(getDriver(), 15);
     }
 
+    @Step("Click on languages button")
     public void clickOnLanguagesButton() {
         wait.until(ExpectedConditions.visibilityOf(languagesButton)).click();
-        System.out.println("Click on languages button");
+        log.info("Click on languages button");
+        makeScreenshot();
     }
 
     public int checkAmountLanguages() {
         List<WebElement> webElementList = getDriver().findElements(By.xpath("//ul[@class='dropdown-menu hidden-sm-down']//li"));
-        System.out.println("Check amount languages");
+        log.info("Check amount languages");
         return webElementList.size();
 
     }
 
+    @Step("Check ukrainian language exist")
     public String checkUkrLanguageExist() {
         wait.until(ExpectedConditions.visibilityOf(dropDownList));
         BasePage.waitUntilVisible(ukrVisible, 10);
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("arguments[0].scrollIntoView();", ukrVisible);
-        System.out.println("Scroll page down");
+        log.info("Scroll page down");
         ArrayList<String> listLanguages = new ArrayList<>();
         List<WebElement> webElementList = getDriver().findElements(By.xpath("//ul[@class='dropdown-menu hidden-sm-down']//li"));
         for (WebElement element : webElementList) {
             String ukrLanguage = element.findElement(By.xpath("//a[@data-iso-code='uk']")).getText();
             listLanguages.add(ukrLanguage);
         }
-        System.out.println("Check languages exist");
+        log.info("Check languages exist");
+        makeScreenshot();
         return String.valueOf(listLanguages);
     }
 
+    @Step("Click on sign in")
     public void clickOnSignIn() {
         wait.until(ExpectedConditions.visibilityOf(signInButton)).click();
-        System.out.println("Click on Sign In");
+        log.info("Click on Sign In");
+        makeScreenshot();
     }
 
 }

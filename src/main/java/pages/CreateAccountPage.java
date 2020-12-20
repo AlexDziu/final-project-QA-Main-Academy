@@ -1,10 +1,15 @@
 package pages;
 
+import io.qameta.allure.Step;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import static utils.ScreenShotUtils.*;
 
+@Slf4j
 public class CreateAccountPage extends BasePage {
 
     @FindBy(xpath = "//label[@class='radio-inline'][1]//input")
@@ -47,6 +52,7 @@ public class CreateAccountPage extends BasePage {
         PageFactory.initElements(getDriver(), this);
     }
 
+    @Step("I am registering")
     public void fillRegistration(String firstName, String lastName, String email,
                                  String password, String birthdate) {
         selectMr.click();
@@ -59,13 +65,16 @@ public class CreateAccountPage extends BasePage {
         selectCustomer.click();
         selectNewsLetter.click();
         selectIAgree.click();
+        log.info("Fill registration");
+        makeScreenshot();
         waitUntilClickable(saveButton, 10).click();
         saveButton.click();
-        System.out.println("Fill registration");
     }
 
+    @Step("I am registering with invalid data")
     public void fillRegistrationWithInvalidData(String firstName, String lastName, String email,
                                                 String password, String birthdate) {
+        Actions actions = new Actions(getDriver());
         selectMr.click();
         waitUntilVisible(fieldFirstName, 5).sendKeys(firstName);
         fieldLastName.sendKeys(lastName);
@@ -76,18 +85,19 @@ public class CreateAccountPage extends BasePage {
         selectCustomer.click();
         selectNewsLetter.click();
         selectIAgree.click();
-        waitUntilClickable(saveButton, 10).click();
-        saveButton.click();
-        System.out.println("Fill invalid registration");
+        waitUntilClickable(saveButton, 10);
+        actions.doubleClick(saveButton).build().perform();
+        log.info("Fill invalid registration");
+        makeScreenshot();
     }
 
     public String borderFirstName() {
-        System.out.println("First name border is red");
+        log.info("First name border is red");
         return waitUntilVisible(fieldFirstName, 10).getCssValue("outline-color");
     }
 
     public String errorMessage() {
-        System.out.println("Get error message");
+        log.info("Get error message");
         return waitUntilVisible(invalidFormatMessage, 10).getText();
     }
 }

@@ -1,10 +1,15 @@
 package pages;
 
+import io.qameta.allure.Step;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import static utils.ScreenShotUtils.*;
+
+@Slf4j
 @Getter
 public class SignInPage extends BasePage {
 
@@ -15,8 +20,10 @@ public class SignInPage extends BasePage {
         PageFactory.initElements(getDriver(), this);
     }
 
+    @Step("I click on create account")
     public void clickOnCreateAccount() {
         waitUntilVisible(createAccountLink, 10).click();
-        System.out.println("Click on create account");
+        log.info("Click on create account");
+        makeScreenshot();
     }
 }
