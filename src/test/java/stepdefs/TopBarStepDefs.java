@@ -23,10 +23,10 @@ public class TopBarStepDefs {
 
     @Then("I see that {string} language exist in dropdown")
     public void i_see_ukrainian_exist(String language) {
-        assertThat(topBar.checkUkrLanguageExist()).contains(language);
+        assertThat(topBar.checkAllLanguageFromDropdown()).contains(language);
     }
 
-    @When("I lick on Sign in button")
+    @When("I click on Sign in button")
     public void i_click_on_signIn() {
         topBar.clickOnSignIn();
     }

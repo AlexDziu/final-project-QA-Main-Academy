@@ -3,7 +3,6 @@ package pages;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -69,26 +68,6 @@ public class CreateAccountPage extends BasePage {
         makeScreenshot();
         waitUntilClickable(saveButton, 10).click();
         saveButton.click();
-    }
-
-    @Step("I am registering with invalid data")
-    public void fillRegistrationWithInvalidData(String firstName, String lastName, String email,
-                                                String password, String birthdate) {
-        Actions actions = new Actions(getDriver());
-        selectMr.click();
-        waitUntilVisible(fieldFirstName, 5).sendKeys(firstName);
-        fieldLastName.sendKeys(lastName);
-        fieldEmail.sendKeys(email);
-        fieldPassword.sendKeys(password);
-        fieldBirthdate.sendKeys(birthdate);
-        selectReceive.click();
-        selectCustomer.click();
-        selectNewsLetter.click();
-        selectIAgree.click();
-        waitUntilClickable(saveButton, 10);
-        actions.doubleClick(saveButton).build().perform();
-        log.info("Fill invalid registration");
-        makeScreenshot();
     }
 
     public String borderFirstName() {

@@ -2,7 +2,7 @@ Feature: Registration with invalid data
 
   Background: User enters data
     Given I am on the demo.prestashop.com main page
-    When I lick on Sign in button
+    When I click on Sign in button
     And I click on No account? Create one here link
 
   Scenario: Registration with invalid data

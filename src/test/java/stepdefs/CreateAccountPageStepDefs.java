@@ -18,7 +18,7 @@ public class CreateAccountPageStepDefs {
 
     @Given("I fill First name field with James8 and rest fields valid data")
     public void i_fill_invalid_data() {
-        createAccountPage.fillRegistrationWithInvalidData(INVALID_NAME, LAST_NAME, EMAIL, PASSWORD, BIRTHDATE);
+        createAccountPage.fillRegistration(INVALID_NAME, LAST_NAME, EMAIL, PASSWORD, BIRTHDATE);
     }
 
     @And("I check that First name higlighted in red")

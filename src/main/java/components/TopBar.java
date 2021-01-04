@@ -4,14 +4,12 @@ import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.BasePage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,21 +56,17 @@ public class TopBar {
     }
 
     @Step("Check ukrainian language exist")
-    public String checkUkrLanguageExist() {
+    public ArrayList<String> checkAllLanguageFromDropdown() {
         wait.until(ExpectedConditions.visibilityOf(dropDownList));
-        BasePage.waitUntilVisible(ukrVisible, 10);
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        js.executeScript("arguments[0].scrollIntoView();", ukrVisible);
-        log.info("Scroll page down");
         ArrayList<String> listLanguages = new ArrayList<>();
         List<WebElement> webElementList = getDriver().findElements(By.xpath("//ul[@class='dropdown-menu hidden-sm-down']//li"));
         for (WebElement element : webElementList) {
-            String ukrLanguage = element.findElement(By.xpath("//a[@data-iso-code='uk']")).getText();
-            listLanguages.add(ukrLanguage);
+            String language = element.findElement(By.xpath("//a[@data-iso-code='uk']")).getText();
+            listLanguages.add(language);
         }
         log.info("Check languages exist");
         makeScreenshot();
-        return String.valueOf(listLanguages);
+        return listLanguages;
     }
 
     @Step("Click on sign in")
